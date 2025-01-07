@@ -36,7 +36,7 @@ After installing the application on your device no additional setup is required.
    If you don't have an account tap on the Get Started link from the sign in page.
    ![Tasky Sign up Page](https://github.com/abcdOfficialzw/tasky_mobile_app/blob/main/assets/readme%20examples/signup_page.PNG?raw=true)
 5. Home Page
-   [Tasky Home Page](https://github.com/abcdOfficialzw/tasky_mobile_app/blob/main/assets/readme%20examples/home_page.PNG?raw=true)
+   ![Tasky Home Page](https://github.com/abcdOfficialzw/tasky_mobile_app/blob/main/assets/readme%20examples/home_page.PNG?raw=true)
 6. Creating a task
 - To create a task tap on the Floating Action Button.
   ![Tasky Create Task Page](https://github.com/abcdOfficialzw/tasky_mobile_app/blob/main/assets/readme%20examples/create_task_page.PNG?raw=true)
