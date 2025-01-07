@@ -6,7 +6,7 @@ import 'package:tasky/auth/views/pages/signup_page.dart';
 import 'package:tasky/landing_page.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/landing-page',
   routes: <RouteBase>[
     GoRoute(
       path: '/',

@@ -12,6 +12,7 @@ class SecureStorage {
   static const String token = 'access_token';
   static const String _refreshToken = 'refresh_token';
   static const String pensionNumber = "pension_number";
+  static const String lastSynced = "last_synced";
 
   Future<void> saveToken(String accessToken) async {
     await storage.write(key: token, value: accessToken, iOptions: iOptions);
@@ -20,6 +21,20 @@ class SecureStorage {
   Future<void> saveRefreshToken(String refreshToken) async {
     await storage.write(
         key: _refreshToken, value: refreshToken, iOptions: iOptions);
+  }
+
+  Future<void> setLastSynced() async {
+    await storage.write(
+        key: lastSynced, value: DateTime.now().toString(), iOptions: iOptions);
+  }
+
+  Future<DateTime> getLastSynced() async {
+    final _lastSynced = await storage.read(key: lastSynced, iOptions: iOptions);
+
+    if (_lastSynced == null) {
+      return DateTime(2000);
+    }
+    return DateTime.parse(_lastSynced);
   }
 
   Future<String?> getToken() async {

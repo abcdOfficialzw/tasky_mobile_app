@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/dimens.dart';
 
-class TaskSearchNotFound extends StatelessWidget {
-  const TaskSearchNotFound({
+class TaskSearchNotFoundWidget extends StatelessWidget {
+  const TaskSearchNotFoundWidget({
     super.key,
   });
 

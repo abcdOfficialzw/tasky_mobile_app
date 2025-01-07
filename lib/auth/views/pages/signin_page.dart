@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tasky/auth/state/bloc.dart';
+import 'package:tasky/auth/state/state.dart';
 import 'package:tasky/auth/views/widgets/signin_form.dart';
 import 'package:tasky/utils/constants/dimens.dart';
 
 import '../../../utils/widgets/outlined_form_field.dart';
+import '../../state/event.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
@@ -40,9 +45,34 @@ class _SigninPageState extends State<SigninPage> {
               SizedBox(
                 height: Dimens.spacing.veryLarge,
               ),
-              SigninForm(
-                usernameTextEditingController: usernameTextEditingController,
-                passwordTextEditingController: passwordTextEditingController,
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthError) {
+                    /// alert user
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(state.error)));
+                  }
+                  if (state is Authenticated) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text(
+                            "Welcome ${state.userProfileResponseModel.fullName} 👋🏽")));
+                    context.go("/");
+                  }
+                },
+                child: SigninForm(
+                  usernameTextEditingController: usernameTextEditingController,
+                  passwordTextEditingController: passwordTextEditingController,
+                  onSignIn: () {
+                    context.read<AuthBloc>().add(
+                          SignInEvent(
+                            username: usernameTextEditingController.text,
+                            password: passwordTextEditingController.text,
+                          ),
+                        );
+                  },
+                ),
               )
             ],
           ),
