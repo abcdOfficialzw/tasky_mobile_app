@@ -34,8 +34,31 @@ Future<void> main() async {
     }
   });
   WidgetsFlutterBinding.ensureInitialized();
-  //await SQLiteDatabaseHelper.instance.initDb('taskyy.db');
 
+  final Cron cron = Cron();
+  cron.schedule(Schedule.parse('*/1 * * * *'), () async {
+    Logger log = Logger('SyncService');
+    log.info("Syncing...");
+    try {
+      final SyncRepositoryImpl syncRepository = SyncRepositoryImpl();
+
+      await syncRepository.syncDeletedTasks();
+      await syncRepository.addNewTasksToRemote();
+      await syncRepository.updateRemoteWithLocalChanges();
+      await syncRepository.updateLocalWithRemoteChanges();
+
+      // If no exception has occurred then update the last synced time
+      SecureStorage secureStorage = SecureStorage();
+      log.info("Syncing passed setting last synced time");
+      secureStorage.setLastSynced();
+    }
+
+    // catch on ClientException
+
+    catch (e) {
+      log.severe("Error syncing: $e");
+    }
+  });
   runApp(const MyApp());
 }
 

@@ -6,7 +6,7 @@ enum NetworkingMethods {
 }
 
 class AppUrls {
-  static const String BASE_URL = "https://f29e-197-221-253-133.ngrok-free.app";
+  static const String BASE_URL = "https://293d-77-246-50-124.ngrok-free.app";
   static const Auth auth = Auth();
   static const Tasks tasks = Tasks();
 }

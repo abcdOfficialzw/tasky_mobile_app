@@ -28,31 +28,6 @@ class TasksPage extends StatelessWidget {
       create: (context) => TaskBloc()..add(LoadTasksEvent()),
       child: BlocBuilder<TaskBloc, TaskState>(
         builder: (context, state) {
-          final crn.Cron cron = crn.Cron();
-          cron.schedule(crn.Schedule.parse('*/3 * * * *'), () async {
-            Logger log = Logger('SyncService');
-            log.info("Syncing...");
-            try {
-              final SyncRepositoryImpl syncRepository = SyncRepositoryImpl();
-
-              await syncRepository.syncDeletedTasks();
-              await syncRepository.addNewTasksToRemote();
-              await syncRepository.updateRemoteWithLocalChanges();
-              await syncRepository.updateLocalWithRemoteChanges();
-
-              // If no exception has occurred then update the last synced time
-              SecureStorage secureStorage = SecureStorage();
-              log.info("Syncing passed setting last synced time");
-              secureStorage.setLastSynced();
-              context.read<TaskBloc>().add(LoadTasksEvent());
-            }
-
-            // catch on ClientException
-
-            catch (e) {
-              log.severe("Error syncing: $e");
-            }
-          });
           return SafeArea(
             child: BlocListener<TaskBloc, TaskState>(
               listener: (context, state) {
